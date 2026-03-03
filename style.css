@@ -1,0 +1,309 @@
+/* ===== 1. RESET & GLOBAL ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+html { scroll-behavior: smooth; }
+
+body {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(34,197,94,.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(59,130,246,.15), transparent 40%),
+    linear-gradient(135deg, #020617, #0f172a 60%, #020617);
+  color: #fff; 
+  transition: .35s ease;
+}
+
+/* ===== 2. PRELOADER ===== */
+#preloader {
+  position: fixed; inset: 0; background: #020617; z-index: 9999; 
+  display: flex; justify-content: center; align-items: center; transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.loader-content { position: relative; display: flex; justify-content: center; align-items: center; }
+.loader-circle {
+  width: 80px; height: 80px; border: 3px solid rgba(74, 222, 128, 0.2);
+  border-top-color: #4ade80; border-radius: 50%; animation: spin 1s linear infinite;
+}
+.loader-text { position: absolute; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 2px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.preloader-hidden { opacity: 0; visibility: hidden; }
+
+/* ===== 3. NAVBAR ===== */
+.navbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 80px; background: rgba(255,255,255,.05);
+  backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.08);
+  position: sticky; top: 0; z-index: 1000;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 600; }
+.nav-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #4ade80; }
+.navbar ul { display: flex; gap: 32px; list-style: none; position: absolute; left: 50%; transform: translateX(-50%); }
+.navbar a { color: #fff; text-decoration: none; transition: .25s; }
+.navbar a:hover, .navbar a.active-link { color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.4); }
+.nav-right { display: flex; align-items: center; gap: 14px; }
+
+/* Theme Switch */
+.theme-switch { position: relative; width: 60px; height: 32px; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; inset: 0; background: #0f172a; border-radius: 50px; cursor: pointer;
+  transition: .3s; border: 1px solid rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 6px;
+}
+.slider svg { width: 18px; height: 18px; z-index: 1; transition: all 0.3s ease; }
+.slider .sun { stroke: #fbbf24; fill: #1ce22c; } 
+.slider .moon { stroke: #cbd5e1; fill: #22c55e; }
+.slider::before {
+  content: ""; position: absolute; height: 24px; width: 24px; left: 4px; top: 50%;
+  transform: translateY(-50%); background: white; border-radius: 50%;
+  transition: .4s cubic-bezier(0.4, 0.0, 0.2, 1); z-index: 2;
+}
+.theme-switch input:checked + .slider { background: #e5e7eb; border: 1px solid rgba(0,0,0,0.1); }
+.theme-switch input:checked + .slider::before { transform: translate(26px,-50%); background: #22c55e; }
+
+/* ===== 4. HERO SECTION ===== */
+.hero {
+  min-height: 85vh; display: flex; align-items: center; justify-content: space-between;
+  gap: 50px; padding: 40px 10%; overflow: hidden; text-align: left;
+}
+.hero-text { 
+  flex: 1; max-width: 600px; z-index: 2; display: flex; flex-direction: column; 
+  align-items: flex-start; justify-content: center; 
+}
+.hero-badge {
+  display: inline-block; padding: 8px 16px; background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3); color: #4ade80; border-radius: 30px;
+  font-size: 14px; font-weight: 600; margin-bottom: 20px; letter-spacing: 1px;
+}
+.hero h1.hero-title { margin-top: 20px; margin-bottom: 5px; line-height: 1.1; letter-spacing: -1px; }
+.hero-title .greeting { font-size: 42px; color: #f8fafc; font-weight: 600; }
+.hero-title .name {
+  font-size: 72px; font-weight: 800; display: inline-block; margin-top: 5px; 
+  background: linear-gradient(90deg, #22c55e, #4ade80, #38bdf8);
+  background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-text p { margin-top: 10px; margin-bottom: 30px; font-size: 24px; color: #94a3b8; font-weight: 500; min-height: 32px; }
+.hero button {
+  width: 200px; padding: 14px; background: linear-gradient(90deg, #22c55e, #4ade80);
+  border: none; border-radius: 14px; cursor: pointer; font-weight: 600; color: #052e16;
+  box-shadow: 0 10px 20px -10px rgba(34, 197, 94, 0.5); transition: transform 0.3s ease;
+}
+.hero button:hover { transform: translateY(-3px) scale(1.05); }
+
+/* Hero Image */
+.hero-image { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; z-index: 1; min-height: 400px; }
+.img-glow {
+  position: absolute; width: 420px; height: 420px;
+  background: linear-gradient(45deg, #22c55e, #38bdf8); filter: blur(40px); opacity: 0.4; z-index: -1; 
+  animation: morphShape 10s ease-in-out infinite alternate;
+}
+.hero-image img {
+  width: 380px; height: 380px; object-fit: cover; object-position: top center;
+  border-radius: 50%; border: 5px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 2; transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.hero-image img:hover { transform: scale(1.03); border-color: #4ade80; }
+@keyframes morphShape {
+  0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(0deg); }
+  50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 50% 50% 20% 80% / 20% 80% 50% 50%; transform: rotate(180deg); }
+}
+
+/* ===== 5. GENERAL SECTIONS ===== */
+section { padding: 80px 10%; text-align: center; position: relative; z-index: 1; }
+section h2 { font-size: 36px; margin-bottom: 25px; }
+.reveal { opacity: 0; transform: translateY(60px); transition: .8s; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* About & Skills (Grid) */
+.about { max-width: 900px; margin: auto; padding: 60px 40px; border-radius: 20px; background: rgba(255,255,255,.04); }
+.about-text { max-width: 700px; margin: auto; line-height: 1.7; font-size: 16px; text-align: center; color: #e5e7eb; }
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px; margin-top: 30px; }
+.card { padding: 20px; border-radius: 14px; background: rgba(255,255,255,.05); transition: .25s; }
+.card:hover { transform: translateY(-8px); }
+
+/* ===== 6. PROJECTS (3D TILT EFFECT) ===== */
+.projects-grid { 
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; 
+  margin-top: 40px; perspective: 1000px; 
+}
+/* Project Card Image Fix (Stretching rokne ke liye) */
+.project-card img { 
+  width: 100%; 
+  height: 180px; /* Height wahi 180px rakhi hai jo pehle thi */
+  
+  /* ⭐ ASLI MAGIC WALI LINE ⭐ */
+  object-fit: cover; /* Ye photo ko khichne se rokega aur agar zarurat padi toh crop karega */
+  object-position: center; /* Photo ka beech ka hissa focus mein rahega */
+  
+  border-radius: 12px; 
+  margin-bottom: 15px; 
+  transform: translateZ(30px); 
+}
+.project-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; transform: translateZ(30px); }
+.project-card h3, .project-card p { transform: translateZ(20px); }
+/* Make Project Link behave like a normal card */
+a.project-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Isse 3D effect poore card par perfectly apply hoga */
+  cursor: pointer;
+}
+
+/* ===== 7. CONTACT & FOOTER ===== */
+.contact p { color: #94a3b8; margin-top: 10px; }
+.social-icons { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+.social-icons .icon {
+  display: flex; align-items: center; justify-content: center; width: 50px; height: 50px;
+  border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.social-icons .icon:hover { transform: translateY(-5px); }
+.social-icons .github:hover { color: #fff; border-color: rgba(255, 255, 255, 0.5); box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1); }
+.social-icons .instagram:hover { color: #ec4899; border-color: rgba(236, 72, 153, 0.5); box-shadow: 0 10px 20px rgba(236, 72, 153, 0.15); }
+.social-icons .whatsapp:hover { color: #22c55e; border-color: rgba(34, 197, 94, 0.5); box-shadow: 0 10px 20px rgba(34, 197, 94, 0.15); }
+.footer { text-align: center; padding: 25px 10px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,.08); }
+
+/* ===== 8. CURSOR GLOW ===== */
+.cursor-glow {
+  position: fixed; width: 200px; height: 200px; background: radial-gradient(circle, rgba(74, 222, 128, 0.12), transparent 60%);
+  border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: 0; transition: transform 0.1s ease-out;
+}
+/* ===== CONTACT FORM (GLASSMORPHISM) ===== */
+/* ===== CONTACT FORM (PREMIUM WIDE & COMPACT FIX) ===== */
+.contact-container {
+  max-width: 650px; /* ⭐ Width wapas badha di (Chauda aur premium look) */
+  margin: 40px auto 0;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Dabbo ke beech ka gap tight rakha hai */
+  background: rgba(255, 255, 255, 0.03); /* Ekdum light glassy feel */
+  padding: 30px 40px; /* ⭐ Top aur Bottom ki padding kam kardi taaki height choti ho */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.input-group input, .input-group textarea {
+  width: 100%;
+  padding: 12px 18px; /* ⭐ Inputs ki height aur patli kar di (16px se 12px) */
+  border-radius: 12px; 
+  background: rgba(0, 0, 0, 0.2); 
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #f8fafc;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+/* ⭐ Textarea (Message box) ki height strictly choti ki */
+.input-group textarea {
+  height: 110px; /* Box ko lamba hone se rokega */
+  resize: none; /* User ko box drag karke bada karne se rokega */
+}
+
+.input-group input::placeholder, .input-group textarea::placeholder {
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Premium macOS Style Focus Effect */
+.input-group input:focus, .input-group textarea:focus {
+  border-color: #4ade80;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.15); 
+}
+
+.submit-btn {
+  padding: 14px;
+  margin-top: 5px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #22c55e, #38bdf8); /* Wapas original mast color */
+  border: none;
+  color: #020617;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+}
+
+/* --- Light Mode adjustments for Form --- */
+body.light .contact-form {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+body.light .input-group input, body.light .input-group textarea {
+  background: rgba(255, 255, 255, 0.7);
+  color: #1e293b;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+body.light .input-group input::placeholder, body.light .input-group textarea::placeholder {
+  color: #94a3b8;
+}
+body.light .input-group input:focus, body.light .input-group textarea:focus {
+  border-color: #22c55e;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+}
+body.light .submit-btn {
+  color: #ffffff;
+}
+
+/* ===== 9. LIGHT MODE ADJUSTMENTS (PREMIUM GLASSMORPHISM) ===== */
+body.light {
+  background: 
+    radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.25), transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(250, 204, 21, 0.15), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(34, 197, 94, 0.2), transparent 45%),
+    linear-gradient(135deg, #f0fdfa 0%, #f8fafc 50%, #eff6ff 100%);
+  color: #0f172a; 
+}
+body.light #preloader { background: #f8fafc; }
+body.light .loader-text { color: #0f172a; }
+body.light .navbar { 
+  background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+}
+body.light .navbar a { color: #334155; font-weight: 500; }
+body.light .navbar a:hover, body.light .navbar a.active-link { color: #22c55e; text-shadow: none; font-weight: 700; }
+body.light .hero-badge { 
+  background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(34, 197, 94, 0.4); color: #15803d; backdrop-filter: blur(10px);
+}
+body.light .hero-title .greeting { color: #1e293b; }
+body.light .hero-text p { color: #475569; }
+body.light .img-glow { opacity: 0.35; filter: blur(50px); background: linear-gradient(45deg, #4ade80, #38bdf8); } 
+body.light .hero-image img { border-color: rgba(255, 255, 255, 0.9); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+body.light .card, body.light .project-card, body.light .about {
+  background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04); border: 1px solid rgba(255, 255, 255, 0.8); 
+}
+body.light .project-card:hover { box-shadow: 0 25px 45px rgba(0, 0, 0, 0.08); background: rgba(255, 255, 255, 0.65); }
+body.light .about-text, body.light .contact p { color: #475569; }
+body.light .social-icons .icon { 
+  background: rgba(255, 255, 255, 0.5); border: 1px solid rgba(255, 255, 255, 0.8); color: #64748b; backdrop-filter: blur(10px);
+}
+body.light .social-icons .icon:hover { background: #ffffff; color: #0f172a; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+body.light .social-icons .github:hover { color: #0f172a; border-color: #0f172a; }
+body.light .cursor-glow { background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 60%); }
+
+/* ===== 10. MOBILE RESPONSIVE ===== */
+@media (max-width: 968px) {
+  .navbar { padding: 16px 20px; }
+  .navbar ul { display: none; } 
+  .hero { flex-direction: column; text-align: center; gap: 40px; padding-top: 80px; }
+  .hero-text { align-items: center; }
+  .hero-title .greeting { font-size: 32px; }
+  .hero-title .name { font-size: 48px; }
+  .hero-text p { font-size: 18px; }
+  .hero-image { min-height: 320px; }
+  .hero-image img { width: 280px; height: 280px; }
+  .img-glow { width: 320px; height: 320px; }
+}
